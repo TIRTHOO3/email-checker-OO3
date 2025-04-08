@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Email Checker</h1>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Check</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box">
+            <h2>Results:</h2>
+            <p><strong>Email:</strong> {{ result.email }}</p>
+            <p><strong>Valid Format:</strong> {{ 'Yes' if result.valid_format else 'No' }}</p>
+            {% if result.valid_format %}
+                <p><strong>Domain:</strong> {{ result.domain }}</p>
+                <p><strong>MX Record Exists:</strong> {{ 'Yes' if result.has_mx else 'No' }}</p>
+                <p><strong>Free Email Provider:</strong> {{ 'Yes' if result.free else 'No' }}</p>
+                <p><strong>Disposable/Risky:</strong> {{ 'Yes' if result.disposable else 'No' }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
